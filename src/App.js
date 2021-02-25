@@ -12,7 +12,7 @@ export default function App() {
     localStorage.getItem(TEMPERATURE_LOCALSTORAGE) ?? 0.5;
   const defaultBrightness = localStorage.getItem(BRIGHTNESS_LOCALSTORAGE) ?? 1;
   const defaultHideControls =
-    localStorage.getItem(HIDECONTROLS_LOCALSTORAGE) ?? false;
+    localStorage.getItem(HIDECONTROLS_LOCALSTORAGE) === "true" ? true : false;
   const [temperature, setTemperature] = useState(defaultTemperature);
   const [brightness, setBrightness] = useState(defaultBrightness);
   const [hideControls, setHideControls] = useState(defaultHideControls);
