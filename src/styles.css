@@ -34,6 +34,7 @@ body {
 }
 
 .ColorShift > label > input[type="checkbox"] + .checkbox-display {
+  position: relative;
   display: inline-block;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
   border: 1px solid #000000;
@@ -52,8 +53,8 @@ body {
 .ColorShift > label > input[type="checkbox"]:checked + .checkbox-display::before {
   content: '✔';
   position: absolute;
-  top: 0.2em;
-  left: 0;
+  top: -0.1em;
+  left: -0.1em;
   font-size: 0.9em;
 }
 
