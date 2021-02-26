@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 const TEMPERATURE_LOCALSTORAGE = "temperature";
 const BRIGHTNESS_LOCALSTORAGE = "brightness";
 const HIDECONTROLS_LOCALSTORAGE = "hideControls";
+const COLORSHIFT_LOCALSTORAGE = "colorShift";
 
 export default function App() {
   const defaultTemperature =
@@ -13,15 +14,18 @@ export default function App() {
   const defaultBrightness = localStorage.getItem(BRIGHTNESS_LOCALSTORAGE) ?? 1;
   const defaultHideControls =
     localStorage.getItem(HIDECONTROLS_LOCALSTORAGE) === "true" ? true : false;
+  const deaultColorShift = localStorage.getItem(COLORSHIFT_LOCALSTORAGE) === "false" ? false : true;
   const [temperature, setTemperature] = useState(defaultTemperature);
   const [brightness, setBrightness] = useState(defaultBrightness);
   const [hideControls, setHideControls] = useState(defaultHideControls);
+  const [colorShift, setColorShift] = useState(deaultColorShift)
 
   useEffect(() => {
     localStorage.setItem(TEMPERATURE_LOCALSTORAGE, temperature);
     localStorage.setItem(BRIGHTNESS_LOCALSTORAGE, brightness);
     localStorage.setItem(HIDECONTROLS_LOCALSTORAGE, hideControls);
-  }, [temperature, brightness, hideControls]);
+    localStorage.setItem(COLORSHIFT_LOCALSTORAGE, colorShift)
+  }, [temperature, brightness, hideControls, colorShift]);
 
   const onKeyDown = (e) => {
     if (e.code === "Escape" || e.code === "KeyC") {
@@ -49,7 +53,7 @@ export default function App() {
       <div
         className="Background"
         style={{
-          backgroundColor: chroma.temperature(temperature * 15000),
+          backgroundColor: colorShift ? chroma.temperature(temperature * 15000) : '#fff',
           opacity: brightness
         }}
         onDoubleClick={onDoubleClick}
@@ -64,7 +68,15 @@ export default function App() {
             step="0.001"
             value={temperature}
             onChange={(e) => setTemperature(e.target.value)}
+            disabled={!colorShift}
           />
+          <div className="ColorShift">
+            <label>
+              <input type="checkbox" checked={colorShift} onChange={(e) => setColorShift(e.target.checked)} />
+              <span className="checkbox-display" />
+              Change color temperature
+            </label>
+          </div>
           <input
             className="Brightness"
             type="range"
